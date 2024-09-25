@@ -1,6 +1,8 @@
 ### Forum Management API
 
-This project is a **Forum Management System** designed to focus primarily on **full-text search** and **indexing** capabilities using **PostgreSQL** as the database. It showcases the performance and efficiency of querying large amounts of data through optimized full-text search and proper indexing strategies. The primary objective of this API is to provide users the ability to perform full-text searches on **posts** and **comments**, and retrieve relational data such as tags, users, and private messages.
+This project is a **Forum Management System** focused on demonstrating **full-text search** and **indexing** capabilities using **PostgreSQL**. The primary objective of this API is to showcase efficient querying of large datasets through optimized indexing and partitioning strategies. The system includes features like **posts**, **comments**, and **private messaging**, and the project allows users to test fetch operations for these entities, including full-text search and paginated retrieval. **The API is read-only**, meaning it does not provide endpoints for creating or modifying forums, posts, or categories, but focuses on retrieving and searching data efficiently.
+
+Additionally, the project includes a custom Artisan command to manage **partitioning** for tables like **posts**, **comments**, and **private messages** to enhance database performance as data grows over time.
 
 ### Key Features:
 - **Full-Text Search**: Perform efficient searches on posts and comments using PostgreSQL's full-text search capabilities.
@@ -93,6 +95,26 @@ You can log in using the user created by the seeder:
 
 - **Email**: `userone@example.com`
 - **Password**: `password123`
+
+### Example: Running Partition Creation Command
+
+You can use the custom Artisan command to create new partitions for the `posts`, `comments`, and `private_messages` tables dynamically. This is useful for optimizing performance by splitting large datasets into smaller, manageable partitions based on the year.
+
+#### Command Example:
+
+To create a new partition for the current year:
+
+```bash
+php artisan partitions:create
+```
+
+To create a new partition for a specific year, for example, 2025:
+
+```bash
+php artisan partitions:create 2025
+```
+
+This command ensures that new partitions are created only if they do not already exist.
 
 ### API Endpoints
 
@@ -302,4 +324,4 @@ GET /api/search?query=laravel
 
 ### Conclusion
 
-This project focuses on demonstrating **full-text search** and **indexing** with **PostgreSQL** in a forum management context. It is primarily built for testing and exploring how well-optimized queries can fetch data in real-time. You can test the efficiency of search and fetch operations, but note that the API does **not** include endpoints for creating or modifying forums, posts, or categories. The project is designed to handle large datasets efficiently, making it an excellent resource for testing search queries and indexing mechanisms.
+This project primarily focuses on **query performance**, showcasing how **full-text search** and **partitioning** strategies can be applied to a forum-like system. With the ability to handle large datasets efficiently through indexing and partitioning, users can test various queries, including retrieving posts, comments, and private messages. The inclusion of a custom partitioning command allows easy creation of new partitions, ensuring optimal performance as the dataset grows. This project does not include write operations such as creating or modifying posts, forums, or categories, but instead highlights read operations and their performance optimizations.
