@@ -1,66 +1,298 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Forum Management API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a **Forum Management System** built using **Laravel** with a **PostgreSQL** database. The system supports forums, categories, posts, comments, tagging, and private messaging between users. It also includes full-text search for posts and comments and uses **Laravel Passport** for API authentication.
 
-## About Laravel
+### Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Before setting up the project, ensure you have the following installed:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **PHP**
+- **Composer** (PHP dependency manager)
+- **Laravel**
+- **PostgreSQL** (Database)
+- **Postman** (for API testing)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Installation Instructions
 
-## Learning Laravel
+#### Step 1: Install Dependencies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Run the following command to install all the required dependencies:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Step 2: Set Up Environment Variables
 
-## Laravel Sponsors
+Create a copy of `.env.example` and rename it to `.env`:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+Modify the necessary fields in the `.env` file to set up your database connection and application URL:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```env
+APP_URL=http://localhost:8000
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=postgres_db
+DB_USERNAME=postgres_username
+DB_PASSWORD=postgres_password
+```
 
-## Contributing
+#### Step 3: Run Database Migrations
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Run the following command to migrate the database:
 
-## Code of Conduct
+```bash
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Step 4: Install Laravel Passport
 
-## Security Vulnerabilities
+Run the following command to install Passport, which is used for API authentication:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan passport:install
+```
 
-## License
+Follow the prompts:
+- When asked `Would you like to run all pending database migrations?`, answer `yes`.
+- When asked to generate personal access and password grant clients, answer `yes`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Step 5: Seed the Database
+
+Run the following command to seed the database with initial data:
+
+```bash
+php artisan db:seed
+```
+
+#### Step 6: Run the Application
+
+To start the server, run the following command:
+
+```bash
+php artisan serve
+```
+
+The application will now be available at `http://localhost:8000`.
+
+#### Login with Seeded User
+
+You can log in using the user created by the seeder:
+
+- **Email**: `userone@example.com`
+- **Password**: `password123`
+
+### API Endpoints
+
+Here are the main endpoints available in the Forum Management API:
+
+#### 1. User Registration
+
+- **Endpoint**: `POST /api/register`
+- **Description**: Registers a new user.
+
+**Request**:
+
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+```
+
+**Response**:
+
+```json
+{
+  "token": "your_auth_token",
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com"
+  }
+}
+```
+
+#### 2. User Login
+
+- **Endpoint**: `POST /api/login`
+- **Description**: Logs in a user and returns an access token.
+
+**Request**:
+
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+```
+
+**Response**:
+
+```json
+{
+  "token": "your_auth_token",
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com"
+  }
+}
+```
+
+#### 3. Get All Forums with Categories
+
+- **Endpoint**: `GET /api/forums`
+- **Description**: Retrieves all forums with their associated categories, paginated.
+
+**Response**:
+
+```json
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Tech Forum",
+      "categories": [
+        { "id": 1, "name": "General Discussion" },
+        { "id": 2, "name": "Announcements" }
+      ]
+    }
+  ],
+  "total": 1,
+  "per_page": 10
+}
+```
+
+#### 4. Get Posts by Forum and Category
+
+- **Endpoint**: `GET /api/forums/{forum}/categories/{category}/posts`
+- **Description**: Retrieves posts in a specific forum and category, with their comments and tags, paginated.
+
+**Response**:
+
+```json
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "content": "This is a post in the General Discussion",
+      "tags": [
+        { "id": 1, "name": "Laravel" }
+      ],
+      "comments": {
+        "current_page": 1,
+        "data": [
+          { "id": 1, "content": "This is a comment" }
+        ],
+        "total": 2,
+        "per_page": 5
+      }
+    }
+  ],
+  "total": 5,
+  "per_page": 10
+}
+```
+
+#### 5. Get Posts by User
+
+- **Endpoint**: `GET /api/users/{user}/posts`
+- **Description**: Retrieves all posts created by a specific user, with their comments and tags, paginated.
+
+**Response**:
+
+```json
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "content": "This is a post created by the user",
+      "tags": [
+        { "id": 1, "name": "Laravel" }
+      ],
+      "comments": {
+        "current_page": 1,
+        "data": [
+          { "id": 1, "content": "This is a comment" }
+        ],
+        "total": 2,
+        "per_page": 5
+      }
+    }
+  ],
+  "total": 5,
+  "per_page": 10
+}
+```
+
+#### 6. Get Private Messages for the Authenticated User
+
+- **Endpoint**: `GET /api/messages`
+- **Description**: Retrieves all messages sent and received by the authenticated user, paginated.
+
+**Response**:
+
+```json
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "message": "Hello, how are you?",
+      "sender_id": 1,
+      "receiver_id": 2
+    }
+  ],
+  "total": 10,
+  "per_page": 10
+}
+```
+
+#### 7. Full-Text Search for Posts and Comments
+
+- **Endpoint**: `GET /api/search`
+- **Description**: Performs a full-text search across posts and comments.
+
+**Request**:
+
+```http
+GET /api/search?query=laravel
+```
+
+**Response**:
+
+```json
+{
+  "posts": [
+    {
+      "id": 1,
+      "content": "This is a post about Laravel",
+      "comments": [
+        { "id": 1, "content": "I love Laravel!" }
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "id": 2,
+      "content": "This comment mentions Laravel",
+      "post": { "id": 1, "content": "This is a post about Laravel" }
+    }
+  ]
+}
+```
+
+### Conclusion
+
+This project provides a basic forum management system with full-text search capabilities and private messaging between users. It uses Laravel Passport for secure API authentication, and endpoints are available for users to register, log in, retrieve forums, posts, comments, and private messages. The project supports pagination and full-text search for both posts and comments.
