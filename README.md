@@ -1,6 +1,13 @@
 ### Forum Management API
 
-This project is a **Forum Management System** built using **Laravel** with a **PostgreSQL** database. The system supports forums, categories, posts, comments, tagging, and private messaging between users. It also includes full-text search for posts and comments and uses **Laravel Passport** for API authentication.
+This project is a **Forum Management System** designed to focus primarily on **full-text search** and **indexing** capabilities using **PostgreSQL** as the database. It showcases the performance and efficiency of querying large amounts of data through optimized full-text search and proper indexing strategies. The primary objective of this API is to provide users the ability to perform full-text searches on **posts** and **comments**, and retrieve relational data such as tags, users, and private messages.
+
+### Key Features:
+- **Full-Text Search**: Perform efficient searches on posts and comments using PostgreSQL's full-text search capabilities.
+- **Indexing**: Optimized indexing on content fields to demonstrate fast and scalable queries.
+- **Pagination**: Supports pagination for posts, comments, and private messages.
+- **API Authentication**: Secured API using **Laravel Passport**.
+- **Read-Only API**: The project focuses on querying and fetching data, and does not include endpoints for creating or modifying forums, posts, categories, or other entities.
 
 ### Prerequisites
 
@@ -295,4 +302,4 @@ GET /api/search?query=laravel
 
 ### Conclusion
 
-This project provides a basic forum management system with full-text search capabilities and private messaging between users. It uses Laravel Passport for secure API authentication, and endpoints are available for users to register, log in, retrieve forums, posts, comments, and private messages. The project supports pagination and full-text search for both posts and comments.
+This project focuses on demonstrating **full-text search** and **indexing** with **PostgreSQL** in a forum management context. It is primarily built for testing and exploring how well-optimized queries can fetch data in real-time. You can test the efficiency of search and fetch operations, but note that the API does **not** include endpoints for creating or modifying forums, posts, or categories. The project is designed to handle large datasets efficiently, making it an excellent resource for testing search queries and indexing mechanisms.
